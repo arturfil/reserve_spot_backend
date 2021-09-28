@@ -16,8 +16,8 @@ exports.getAllMeetings = async (req, res) => {
 }
 
 exports.getMeetingById = async (req, res) => {
-  const { _id } = req.params;
-  const meeting = await Meeting.findById(_id);
+  const { id } = req.params;
+  const meeting = await Meeting.findById(id).populate("attendees").populate("topic")
   try {
     return res.status(200).json(meeting);
   } catch (error) {
@@ -35,8 +35,8 @@ exports.createMeeting = async (req, res) => {
 }
 
 exports.updateMeeting = async (req, res) => {
-  const { _id } = req.params;
-  const meetingToUpdate = await Meeting.findByIdAndUpdate(_id, req.body, {new: true});
+  const { id } = req.params;
+  const meetingToUpdate = await Meeting.findByIdAndUpdate(id, req.body, {new: true});
   try {
     return res.status(202).json(meetingToUpdate);
   } catch (error) {
@@ -45,8 +45,8 @@ exports.updateMeeting = async (req, res) => {
 }
 
 exports.deleteMeeting = async (req, res) => {
-  const { _id } = req.params;
-  const meetingToDelete = await Meeting.findByIdAndDelete(_id);
+  const { id } = req.params;
+  const meetingToDelete = await Meeting.findByIdAndDelete(id);
   try {
     return res.status(203).json({message: "Succesfully Deleted"})
   } catch (error) {
