@@ -15,6 +15,16 @@ const getAllUsers = async (req, res) => {
   }
 }
 
+const getUserById = async (req, res) => {
+  const { id } = req.params;
+  const user = await User.findById(id);
+  try {
+    return res.status(200).json(user)
+  } catch (error) {
+    return res.status(500).json({message: "Couldn't get user"})
+  }
+}
+
 const signUpUser = async (req, res) => {
   const { email } = req.body
   const testEmail = await User.findOne({email}); // {email: req.body.email}
@@ -48,6 +58,7 @@ const loginUser = async (req, res) => {
 
 module.exports = {
   getAllUsers,
+  getUserById,
   signUpUser,
   loginUser
 }

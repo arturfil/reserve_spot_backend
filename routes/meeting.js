@@ -9,7 +9,9 @@ const {
   deleteMeeting,
 } = require("../controllers/meetingController");
 
-router.get("/", getAllMeetings);
+const { validateJwt } = require("../middlewares/processJwt");
+
+router.get("/", validateJwt, getAllMeetings);
 
 router.get("/meeting/:id", getMeetingById);
 
