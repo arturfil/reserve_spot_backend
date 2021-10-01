@@ -32,7 +32,18 @@ const validateJwt = async (req, res, next) => {
   }
 }
 
+const revalidateJwt = async (req, res, next) => {
+  const user = req.user;
+  const token = await generateJwt(user._id)
+  try {
+    return res.json({user, token}) 
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 module.exports = {
   generateJwt,
-  validateJwt
+  validateJwt,
+  revalidateJwt
 }
