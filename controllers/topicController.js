@@ -19,8 +19,8 @@ const createTopic = async (req, res) => {
 }
 
 const deleteTopic = async (req, res) => {
-  const { _id } = req.params
-  const topicToDelete = await Topic.findByIdAndDelete(_id);
+  const { id } = req.params
+  const topicToDelete = await Topic.findByIdAndDelete(id);
   try {
     return res.status(203).json({message: "Deleted Successfuly"})
   } catch (error) {
