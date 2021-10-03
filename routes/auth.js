@@ -6,6 +6,7 @@ const {
   loginUser,
   signUpUser,
   getUserById,
+  googleLogin,
 } = require("../controllers/authController");
 const { validateJwt, revalidateJwt } = require("../middlewares/processJwt");
 
@@ -16,6 +17,8 @@ router.get("/user/:id", getUserById);
 router.post("/signup", signUpUser);
 
 router.post("/login", loginUser);
+
+router.post("/googleLogin", googleLogin)
 
 router.post("/renew", validateJwt, revalidateJwt);
 

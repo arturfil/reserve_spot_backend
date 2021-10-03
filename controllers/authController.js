@@ -56,9 +56,29 @@ const loginUser = async (req, res) => {
   return res.status(200).json({user, token});
 }
 
+const googleLogin = async (req, res) => {
+  const { email, name } = req.body;
+  let user = await User.findOne({email});
+  if (!user) {
+    user = await User.create({
+      email: email,
+      name: name,
+      password: "P",
+      google: true
+    });
+  }
+  try {
+    const token = await generateJwt(user._id);
+    return res.status(200).json({user, token});
+  } catch (error) {
+    return res.status(500).json({message: "User was not able to Log In"});
+  }
+}
+
 module.exports = {
   getAllUsers,
   getUserById,
   signUpUser,
-  loginUser
+  loginUser,
+  googleLogin
 }
