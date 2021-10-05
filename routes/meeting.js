@@ -9,16 +9,16 @@ const {
   deleteMeeting,
 } = require("../controllers/meetingController");
 
-const { validateJwt } = require("../middlewares/processJwt");
+const { validateJwt, isAdmin } = require("../middlewares/processJwt");
 
 router.get("/", getAllMeetings);
 
 router.get("/meeting/:id", getMeetingById);
 
-router.post("/meeting", createMeeting);
+router.post("/meeting", validateJwt, createMeeting);
 
-router.put("/meeting/:id", updateMeeting);
+router.put("/meeting/:id", validateJwt, isAdmin, updateMeeting);
 
-router.delete("/meeting/:id", deleteMeeting);
+router.delete("/meeting/:id", validateJwt, isAdmin, deleteMeeting);
 
 module.exports = router;

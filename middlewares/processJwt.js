@@ -42,8 +42,20 @@ const revalidateJwt = async (req, res, next) => {
   }
 }
 
+const isAdmin = async (req, res) => {
+  if (!req.user) {
+    return res.status(500).json({message: "Need validation First"});
+  }
+  const { role, name } = req.user;
+  if (role !== 'ADMIN') {
+    return res.status(401).json({message: `User ${name} does not have privileges for such action`});
+  }
+  next();
+}
+
 module.exports = {
   generateJwt,
   validateJwt,
-  revalidateJwt
+  revalidateJwt,
+  isAdmin
 }
