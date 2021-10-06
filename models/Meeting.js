@@ -11,8 +11,8 @@ const MeetingSchema = Schema(
       type: String,
       required: true
     },
-    attendees: {
-      type: [Schema.Types.ObjectId],
+    user: {
+      type: Schema.Types.ObjectId,
       ref: 'User'
     },
     date: {

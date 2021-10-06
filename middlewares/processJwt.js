@@ -42,7 +42,7 @@ const revalidateJwt = async (req, res, next) => {
   }
 }
 
-const isAdmin = async (req, res) => {
+const isAdmin = async (req, res, next) => {
   if (!req.user) {
     return res.status(500).json({message: "Need validation First"});
   }
