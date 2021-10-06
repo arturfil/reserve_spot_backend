@@ -7,6 +7,7 @@ const {
   createMeeting,
   updateMeeting,
   deleteMeeting,
+  getMeetingOfUser,
 } = require("../controllers/meetingController");
 
 const { validateJwt, isAdmin } = require("../middlewares/processJwt");
@@ -14,6 +15,8 @@ const { validateJwt, isAdmin } = require("../middlewares/processJwt");
 router.get("/", getAllMeetings);
 
 router.get("/meeting/:id", getMeetingById);
+
+router.get("/meeting/user/:id", validateJwt, getMeetingOfUser);
 
 router.post("/meeting", validateJwt, createMeeting);
 

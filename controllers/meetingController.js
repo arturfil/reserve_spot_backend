@@ -15,6 +15,19 @@ exports.getAllMeetings = async (req, res) => {
   }
 };
 
+exports.getMeetingOfUser = async (req, res) => {
+  const {id} = req.params;
+  const userMeetings = await Meeting.find({user: id});
+  try {
+    if (userMeetings.length === 0) {
+      return res.status(401).json({message: "User donesn't have meetings"});
+    }
+    return res.status(200).json(userMeetings); 
+  } catch (error) {
+    return res.status(500).json({message: "Sever Error"});
+  }
+}
+
 exports.getMeetingById = async (req, res) => {
   const { id } = req.params;
   const meeting = await Meeting.findById(id).populate("user").populate("topic");
