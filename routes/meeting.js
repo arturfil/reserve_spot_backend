@@ -8,11 +8,14 @@ const {
   updateMeeting,
   deleteMeeting,
   getMeetingOfUser,
+  getMeetingsOfTheWeek,
 } = require("../controllers/meetingController");
 
 const { validateJwt, isAdmin } = require("../middlewares/processJwt");
 
 router.get("/", getAllMeetings);
+
+router.get('/weekly', getMeetingsOfTheWeek);
 
 router.get("/meeting/:id", getMeetingById);
 

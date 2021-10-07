@@ -15,6 +15,24 @@ exports.getAllMeetings = async (req, res) => {
   }
 };
 
+exports.getMeetingsOfTheWeek = async (req, res) => {
+  const today = new Date().toISOString().split('T')[0]
+  let aWeekAgo = new Date()
+  aWeekAgo = aWeekAgo.setDate(aWeekAgo.getDate() - 7);
+  aWeekAgo = new Date(aWeekAgo).toISOString().split('T')[0]
+  const meetings = await Meeting.find({date: {$gte: aWeekAgo, $lte: today}})
+    .populate("topic", "name")
+    .populate("user", "name")
+  try {
+    if (meetings.length === 0) {
+      return res.status(400).json({message: "Coulnd't find any meetings"});
+    }
+    return res.status(200).json(meetings);
+  } catch (error) {
+    return res.status(500).json({message: "Server Error"})
+  }
+}
+
 exports.getMeetingOfUser = async (req, res) => {
   const {id} = req.params;
   const userMeetings = await Meeting.find({user: id});
